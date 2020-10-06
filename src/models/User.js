@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const ROLES = require('./Roles.enum');
+
+const roles = Object.keys(ROLES).map((key) => ROLES[key]);
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -18,6 +21,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  role: {type: String, enum: roles, required: true},
   date: {
     type: Date,
     default: Date.now,

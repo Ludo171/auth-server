@@ -11,5 +11,16 @@
         "ecmaVersion": 12
     },
     "rules": {
+        "quotes": [
+            2,
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
+        "max-len": [
+            "error",
+            100
+        ]
     }
 }

@@ -1,9 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const authRoute = require('./routes/auth');
+const {startDbClient} = require('./models/database-client');
 
 // Express server instance
 const server = express();
+const dbClient = startDbClient();
 
 // Cors
 const corsOptions = {
@@ -17,12 +21,10 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended: true}));
 
 // Routes
-server.get('/', (req, res) => {
-  res.send('This is a new Node Express Server !');
-});
+server.use('/auth', authRoute);
 
 // Start Server
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
   console.log(`Server listening port ${PORT}...`);
 });

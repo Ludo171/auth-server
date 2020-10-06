@@ -1,30 +1,38 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const authRoute = require('./routes/auth');
-const {startDbClient} = require('./models/database-client');
+const userRoute = require('./routes/user');
 
-// Express server instance
-const server = express();
-const dbClient = startDbClient();
+const getServerInstance = () => {
+  const server = express();
+  // Cors
+  const corsOptions = {
+    origin: 'http://localhost:3000',
+  };
+  server.use(cors(corsOptions));
 
-// Cors
-const corsOptions = {
-  origin: 'http://localhost:3000',
+  // parse requests of content-type - application/json
+  server.use(bodyParser.json());
+  // parse requests of content-type - application/x-www-form-urlencoded
+  server.use(bodyParser.urlencoded({extended: true}));
+
+  // Routes
+  server.use('/auth', authRoute);
+  server.use('/user', userRoute);
+  return server;
 };
-server.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
-server.use(bodyParser.json());
-// parse requests of content-type - application/x-www-form-urlencoded
-server.use(bodyParser.urlencoded({extended: true}));
+const startServer = (server) => {
+  const PORT = process.env.PORT || 8080;
+  server.listen(PORT, () => {
+    console.log(`Server listening port ${PORT}...`);
+  });
+};
 
-// Routes
-server.use('/auth', authRoute);
+const stopServer = (server) => {
+  server.close();
+};
 
-// Start Server
-const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
-  console.log(`Server listening port ${PORT}...`);
-});
+module.exports = {getServerInstance, startServer, stopServer};
+

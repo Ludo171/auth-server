@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {type: String, enum: roles, required: true},
+  role: {type: String, enum: roles, default: ROLES.COMMON},
   date: {
     type: Date,
     default: Date.now,

@@ -4,7 +4,7 @@
   "description": "Node server hosting an Authentication Rest API linked to a MongoDB Collection of Users",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./src/server.js",
+    "start": "nodemon ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

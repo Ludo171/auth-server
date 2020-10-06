@@ -4,8 +4,6 @@ const {validateRegister, validateLogin} = require('../models/validator');
 const bcrypt = require('bcrypt');
 const {generateNewToken} = require('../auth/jwtTokens');
 const User = require('../models/User');
-const RolesEnum = require('../models/Roles.enum');
-
 
 // POST /auth/register
 // |---> Register a new user
@@ -24,7 +22,7 @@ router.post('/register', async (req, res) => {
     const hash = await bcrypt.hash(req.body.password, salt);
 
     // Save user into DB
-    const user = new User({...req.body, password: hash, role: RolesEnum.COMMON});
+    const user = new User({...req.body, password: hash});
     try {
       const savedUser = await user.save();
       return res.send(

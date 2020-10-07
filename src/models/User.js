@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+const {dbClient} = require('./database-client');
 const ROLES = require('./Roles.enum');
 
 const roles = Object.keys(ROLES).map((key) => ROLES[key]);
 
-const userSchema = new mongoose.Schema({
+const userSchema = new dbClient.Schema({
   firstName: {
     type: String,
     required: true,
@@ -28,4 +28,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = dbClient.model('User', userSchema);

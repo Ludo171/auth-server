@@ -1,12 +1,11 @@
 require('dotenv').config();
-const {getServerInstance, startServer, stopServer} = require('./server');
-const {startDbClient} = require('./models/database-client');
+const {startServer, stopServer} = require('./server');
+const {startDbClient, stopDbClient} = require('./models/database-client');
 
-// Express server instance
-const server = getServerInstance();
-const dbClient = startDbClient();
-startServer(server);
+startDbClient();
+startServer();
 
 setTimeout(() => {
-  dbClient.connection.close();
-}, 10000);
+  stopServer();
+  stopDbClient();
+}, 60 * 1000);
